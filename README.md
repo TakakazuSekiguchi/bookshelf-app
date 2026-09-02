@@ -1,66 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# bookshelf-app
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 概要
+Laravelを用いて開発した書籍レビュー管理アプリです。<br>
+ユーザーは書籍を登録・閲覧し、レビューの投稿やお気に入り登録ができます。<br>
+ジャンルによる分類やレビューへのいいね機能、平均評価に基づくランキング機能も備えています。<br>
 
-## About Laravel
+### 機能
+※実装後に詳細に記載します。<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 環境構築
+※実装後に詳細に記載します。後ほど修正しますが、一旦一通りの流れを書いています。<br>
+※ Docker Desktop を起動した状態で以下の手順を実行してください。<br>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. リポジトリをクローン<br>
+git clone ●●<br>
+cd bookshelf-app<br>
+docker-compose up -d --build<br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. composer install<br>
+docker-compose exec php composer install<br>
 
-## Learning Laravel
+3. `.env`を作成<br>
+cd src<br>
+cp .env.example .env<br>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- docker-compose.ymlのmysqlの箇所を参考に、設定値を変更してください。<br>
+DB_HOST=mysql<br>
+DB_DATABASE=laravel_db<br>
+DB_USERNAME=laravel_user<br>
+DB_PASSWORD=laravel_pass<br>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+※「メール認証機能の設定」については後述いたします。<br>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. アプリキー生成<br>
+docker-compose exec php php artisan key:generate<br>
+docker-compose exec php chown -R www-data:www-data storage bootstrap/cache<br>
+docker-compose exec php chmod -R 775 storage bootstrap/cache<br>
 
-## Laravel Sponsors
+5. マイグレーション<br>
+docker-compose exec php php artisan migrate<br>
+docker-compose exec php php artisan db:seed<br>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### メール認証機能
+LaravelのEmail Verification機能を利用し、会員登録時にメール認証を必須としています。<br>
+未認証ユーザーはログイン後も一部機能にアクセスできない仕様としています。<br>
 
-### Premium Partners
+開発環境では Mailtrap を使用し、送信メールの動作確認を行っています。<br>
+`.env`ファイルについて、MailtrapのMy Sandbox内にあるUsername、Passwordを確認し、ご自身の設定値に変更してください。<br>
+※Credentials の該当箇所を確認してください。<br>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Mail設定例<br>
+MAIL_MAILER=smtp<br>
+MAIL_HOST=sandbox.smtp.mailtrap.io<br>
+MAIL_PORT=2525<br>
+MAIL_USERNAME=your_username<br>
+MAIL_PASSWORD=your_password<br>
+MAIL_ENCRYPTION=tls<br>
+MAIL_FROM_ADDRESS=noreply@example.com<br>
+MAIL_FROM_NAME="${APP_NAME}"<br>
 
-## Contributing
+## 画面定義
+※実装後に詳細に記載します。<br>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- phpMyAdmin：http://localhost:8080/
+- 会員登録画面（一般ユーザー）：http://localhost/register
+- ログイン画面（一般ユーザー）：http://localhost/login
 
-## Code of Conduct
+## 使用技術（実行環境）
+- PHP 8.5.7
+- Laravel 10.50.3
+- MySQL 8.4.9
+- Docker
+- Mailtrap
+- PHPUnit
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ER図
+![ER図](./index.drawio.png)
 
-## Security Vulnerabilities
+## テーブル設計方針
+※実装後に詳細に記載します。<br>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ログイン情報（動作確認用アカウント）
 
-## License
+### ユーザー1
+- メールアドレス：user1@example.com
+- パスワード：aaaa1111
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### ユーザー2
+- メールアドレス：user2@example.com
+- パスワード：bbbb2222
+
+※ 上記アカウントは `php artisan db:seed` 実行時に作成されます。<br>
+※ すべてのユーザーについて、メール認証済みの状態で作成されています。<br>
+
+## テスト
+※実装後に詳細に記載します。<br>
+Featureテスト、Unitテストを中心に実装しています。<br>
+
+### テスト環境構築
+※実装後に詳細に記載します。後ほど修正しますが、一旦一通りの流れを書いています。<br>
+
+1. データベースを作成<br>
+- rootユーザーで MySQL にログイン<br>
+docker compose exec mysql bash<br>
+mysql -u root -p<br>
+※パスワードは、docker-compose.ymlファイルのMYSQL_ROOT_PASSWORD:に設定されている値を入力してください。<br>
+
+- demo_test というデータベースを作成<br>
+CREATE DATABASE demo_test;<br>
+SHOW DATABASES;<br>
+※SHOW DATABASES;入力後、demo_testが作成されていれば成功です。<br>
+
+2. `.env` をコピーして `.env.testing` を作成<br>
+cd src<br>
+cp .env .env.testing<br>
+
+3. `.env.testing` のAPP_ENVとAPP_KEY=を以下のように変更<br>
+APP_ENV=test<br>
+APP_KEY=<br>
+
+※ APP_KEYはテスト用に再生成するため、一度空にしてください。<br>
+その後、後述のコマンド（key:generate）でテスト用キーを生成します。<br>
+
+4. `.env.testing` のDB設定を以下のように変更<br>
+DB_CONNECTION=mysql_test<br>
+DB_DATABASE=demo_test<br>
+DB_USERNAME=root<br>
+DB_PASSWORD=root<br>
+
+※【重要】本番用データベースと分離するため、テスト専用DBを使用しています。<br>
+必ず『DB_DATABASE=demo_test』に書き換えるようお願いいたします。<br>
+
+### テスト用データベースを作成
+docker-compose exec php php artisan key:generate --env=testing<br>
+docker-compose exec php php artisan migrate:fresh --env=testing<br>
+
+### テスト実行
+docker-compose exec php php artisan test<br>
+
+※ テストでは RefreshDatabase を使用し、各テスト実行ごとにDBをリセットしています。<br>
+
