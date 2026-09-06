@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Book;
+use App\Models\Review;
+use App\Models\ReadingPlan;
 
 class User extends Authenticatable
 {
@@ -42,4 +45,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    public function favoriteBooks()
+    {
+        return $this->belongsToMany(Book::class, 'book_favorite');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function likeReviews()
+    {
+        return $this->belongsToMany(Review::class, 'review_like');
+    }
+
+    public function readingPlans()
+    {
+        return $this->hasMany(ReadingPlan::class);
+    }
 }
