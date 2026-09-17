@@ -16,7 +16,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\RegisteredUserController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-use App\Http\Requests\EmailVerificationRequest; //FormRequest
+// use App\Http\Requests\EmailVerificationRequest; //FormRequest
 // use Illuminate\Foundation\Auth\EmailVerificationRequest; //laravelデフォルト仕様
 
 // 一般ユーザー：会員登録・ログイン
@@ -25,26 +25,26 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 /*---------------------認証関連---------------------*/
 // メール未認証のユーザーに「/email/verify」へ誘導
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->name('verification.notice');
+// Route::get('/email/verify', function () {
+//     return view('auth.verify-email');
+// })->name('verification.notice');
 // })->middleware('auth')->name('verification.notice'); //laravelデフォルト仕様
 
 // 認証メール再送
-Route::post('/email/verification-notification', function (Request $request) {
-    session()->get('unauthenticated_user')->sendEmailVerificationNotification();
-    // $request->user()->sendEmailVerificationNotification(); //laravelデフォルト仕様
-    session()->put('resent', true);
-    return back()->with('message', 'Verification link sent!');
-})->name('verification.send');
+// Route::post('/email/verification-notification', function (Request $request) {
+//     session()->get('unauthenticated_user')->sendEmailVerificationNotification();
+//     // $request->user()->sendEmailVerificationNotification(); //laravelデフォルト仕様
+//     session()->put('resent', true);
+//     return back()->with('message', 'Verification link sent!');
+// })->name('verification.send');
 // })->middleware(['auth', 'throttle:6,1'])->name('verification.send'); //laravelデフォルト仕様
 
 // 認証メールのリンククリック処理
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    session()->forget('unauthenticated_user');
-    return redirect('/attendance');
-})->name('verification.verify');
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
+//     session()->forget('unauthenticated_user');
+//     return redirect('/attendance');
+// })->name('verification.verify');
 // })->middleware(['auth', 'signed'])->name('verification.verify'); //laravelデフォルト仕様
 /*---------------------------------------------------*/
 
