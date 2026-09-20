@@ -32,7 +32,7 @@ class BookSeeder extends Seeder
 
         // 1. 吾輩は猫である
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784101010014'],
+            ['isbn' => '9784101010014'],
             [
                 'user_id' => $user->id,
                 'title' => '吾輩は猫である',
@@ -46,7 +46,7 @@ class BookSeeder extends Seeder
 
         // 2. 人を動かす
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784422100524'],
+            ['isbn' => '9784422100524'],
             [
                 'user_id' => $user->id,
                 'title' => '人を動かす',
@@ -63,7 +63,7 @@ class BookSeeder extends Seeder
 
         // 3. リーダブルコード
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784873115658'],
+            ['isbn' => '9784873115658'],
             [
                 'user_id' => $user->id,
                 'title' => 'リーダブルコード',
@@ -79,7 +79,7 @@ class BookSeeder extends Seeder
 
         // 4. 7つの習慣
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784863940246'],
+            ['isbn' => '9784863940246'],
             [
                 'user_id' => $user->id,
                 'title' => '7つの習慣',
@@ -96,7 +96,7 @@ class BookSeeder extends Seeder
 
         // 5. 坊っちゃん
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784101010021'],
+            ['isbn' => '9784101010021'],
             [
                 'user_id' => $user->id,
                 'title' => '坊っちゃん',
@@ -112,7 +112,7 @@ class BookSeeder extends Seeder
 
         // 6. サピエンス全史
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784309226712'],
+            ['isbn' => '9784309226712'],
             [
                 'user_id' => $user->id,
                 'title' => 'サピエンス全史',
@@ -129,7 +129,7 @@ class BookSeeder extends Seeder
 
         // 7. Clean Code
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784048930598'],
+            ['isbn' => '9784048930598'],
             [
                 'user_id' => $user->id,
                 'title' => 'Clean Code',
@@ -145,7 +145,7 @@ class BookSeeder extends Seeder
 
         // 8. 嫌われる勇気
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784478025819'],
+            ['isbn' => '9784478025819'],
             [
                 'user_id' => $user->id,
                 'title' => '嫌われる勇気',
@@ -161,7 +161,7 @@ class BookSeeder extends Seeder
 
         // 9. 火花
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784163902302'],
+            ['isbn' => '9784163902302'],
             [
                 'user_id' => $user->id,
                 'title' => '火花',
@@ -177,7 +177,7 @@ class BookSeeder extends Seeder
 
         // 10. FACTFULNESS
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784822289607'],
+            ['isbn' => '9784822289607'],
             [
                 'user_id' => $user->id,
                 'title' => 'FACTFULNESS',
@@ -194,7 +194,7 @@ class BookSeeder extends Seeder
 
         // 11. コンテナ物語
         $book = Book::firstOrCreate(
-            ['isbn_13' => '9784822251468'],
+            ['isbn' => '9784822251468'],
             [
                 'user_id' => $user->id,
                 'title' => 'コンテナ物語',

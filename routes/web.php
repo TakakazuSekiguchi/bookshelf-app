@@ -16,7 +16,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\RegisteredUserController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-// use App\Http\Requests\EmailVerificationRequest; //FormRequest
+use App\Http\Requests\EmailVerificationRequest; //FormRequest
 // use Illuminate\Foundation\Auth\EmailVerificationRequest; //laravelデフォルト仕様
 
 // 一般ユーザー：会員登録・ログイン
@@ -57,7 +57,7 @@ Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
 
 //ログイン後：
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
     // 書籍登録
     Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
     // Route::post('/books', [BookController::class, 'store'])->name('books.store'); //パス：仕様に記載がない
@@ -89,5 +89,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
     // ランキング
-    Route::get('/ranking', [BookController::class, 'ranking'])->name('books.ranking');
+    Route::get('/ranking', [BookController::class, 'ranking'])->name('ranking.index');
 });
