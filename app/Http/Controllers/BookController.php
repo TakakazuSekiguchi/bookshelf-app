@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Book;
+use App\Models\Genre;
 
 class BookController extends Controller
 {
@@ -11,7 +14,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::simplepaginate(10);
+        return view('books.index', compact('books'));
     }
 
     /**
