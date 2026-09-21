@@ -16,7 +16,7 @@ class Book extends Model
         'user_id',
         'title',
         'author',
-        'isbn_13',
+        'isbn',
         'published_date',
         'description',
         'image_url',
@@ -29,7 +29,7 @@ class Book extends Model
 
     public function user()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsTo(User::class);
     }
 
     public function genres()

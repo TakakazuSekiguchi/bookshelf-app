@@ -48,19 +48,11 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 // })->middleware(['auth', 'signed'])->name('verification.verify'); //laravelデフォルト仕様
 /*---------------------------------------------------*/
 
-
-//ログイン前：
-// 書籍一覧（トップ）
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
-
-// 書籍詳細
-Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
-
 //ログイン後：
 Route::middleware('auth')->group(function () {
     // 書籍登録
     Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
-    // Route::post('/books', [BookController::class, 'store'])->name('books.store'); //パス：仕様に記載がない
+    Route::post('/books', [BookController::class, 'store'])->name('books.store'); //パス：仕様に記載がない
 
     // 書籍編集
     Route::get('/books/{book}/edit', [BookController::class, 'edit'])->name('books.edit');
@@ -91,3 +83,10 @@ Route::middleware('auth')->group(function () {
     // ランキング
     Route::get('/ranking', [BookController::class, 'ranking'])->name('ranking.index');
 });
+
+//ログイン前：
+// 書籍一覧（トップ）
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+
+// 書籍詳細
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
