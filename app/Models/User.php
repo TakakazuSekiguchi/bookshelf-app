@@ -61,7 +61,7 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function likeReviews()
+    public function likedReviews()
     {
         return $this->belongsToMany(Review::class, 'review_like');
     }
