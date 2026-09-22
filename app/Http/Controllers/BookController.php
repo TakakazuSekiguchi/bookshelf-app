@@ -64,17 +64,19 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Book $book)
     {
-        //
+        $this->authorize('update', $book);
+
+        return view('books.edit', compact('book'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $this->authorize('update', $book);
     }
 
     /**
@@ -82,6 +84,6 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->authorize('delete', $book);
     }
 }
