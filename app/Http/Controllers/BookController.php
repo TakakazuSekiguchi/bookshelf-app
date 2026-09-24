@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Genre;
@@ -67,8 +68,9 @@ class BookController extends Controller
     public function edit(Book $book)
     {
         $this->authorize('update', $book);
+        $genres = Genre::all();
 
-        return view('books.edit', compact('book'));
+        return view('books.edit', compact('book', 'genres'));
     }
 
     /**
@@ -77,13 +79,33 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $this->authorize('update', $book);
+
+        $book->update([
+            'user_id' => auth()->id(),
+            'title' => $request->title,
+            'author'=> $request->author,
+            'isbn' => $request->isbn,
+            'published_date' => $request->published_date,
+            'description' => $request->description,
+            'image_url' => $request->image_url,
+        ]);
+
+        $book->genres()->sync($request->genres);
+
+        return redirect()->route('books.show', $book)
+            ->with('success', '書籍を更新しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
         $this->authorize('delete', $book);
+
+        $book->delete();
+
+        return redirect()->route('books.index')
+            ->with('success', '書籍を削除しました。');
     }
 }
