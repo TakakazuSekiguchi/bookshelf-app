@@ -75,10 +75,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/genres/{genre}/destroy', [GenreController::class, 'destroy'])->name('genres.destroy');
 
     // レビュー投稿
-    Route::post('/reviews', [ReviewController::class, 'edit'])->name('reviews.store');
+    Route::post('/reviews/{book}', [ReviewController::class, 'store'])->name('reviews.store');
 
     // レビュー編集
     Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
+    Route::put('/reviews/{review}/update', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // いいね
