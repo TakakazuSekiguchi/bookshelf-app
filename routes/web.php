@@ -83,7 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/reviews/{review}/destroy', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // いいね
-    Route::post('/reviews/{review}/like', [ReviewController::class, 'toggleLike'])->name('reviews.like');
+    Route::post('/reviews/{review}/like', [ReviewLikeController::class, 'store'])->name('reviews.like');
 
     // お気に入り一覧
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
