@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use App\Models\User;
@@ -13,7 +14,7 @@ class ReviewLikeController extends Controller
         $user = auth()->user();
 
         // 自分のレビューにはいいねできない
-        if ($review->user_id === $user->id) {
+        if (Gate::denies('like', $review)) {
             return back();
         }
 
