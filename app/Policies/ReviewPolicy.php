@@ -8,19 +8,22 @@ use Illuminate\Auth\Access\Response;
 
 class ReviewPolicy
 {
-    /**
-     * Determine whether the user can update the model.
-     */
+
+    // レビューの編集
     public function update(User $user, Review $review): bool
     {
         return $user->id === $review->user_id;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
+    // レビューの削除
     public function delete(User $user, Review $review): bool
     {
         return $user->id === $review->user_id;
+    }
+
+    // レビューに対するいいね
+    public function like(User $user, Review $review)
+    {
+        return $user->id !== $review->user_id;
     }
 }
