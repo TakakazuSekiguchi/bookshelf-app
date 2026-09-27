@@ -87,7 +87,7 @@ Route::middleware('auth')->group(function () {
 
     // お気に入り一覧
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-    Route::post('/favorites', [FavoriteController::class, 'store'])->name('favorites.toggle');
+    Route::post('/favorites/{book}', [FavoriteController::class, 'store'])->name('favorites.toggle');
 
     // ランキング
     Route::get('/ranking', [BookController::class, 'ranking'])->name('ranking.index');
