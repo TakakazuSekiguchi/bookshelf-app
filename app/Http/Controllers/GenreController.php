@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreGenreRequest;
 use App\Models\Book;
 use App\Models\Genre;
 
@@ -14,6 +15,7 @@ class GenreController extends Controller
     public function index()
     {
         $genres = Genre::withCount('books')->get();
+
         return view('genres.index', compact('genres'));
     }
 
@@ -36,9 +38,11 @@ class GenreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Genre $genre)
     {
-        //
+        $books = $genre->books()->paginate(10);
+
+        return view('genres.show', compact('genre', 'books'));
     }
 
     /**
