@@ -24,15 +24,20 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('genres.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreGenreRequest $request)
     {
-        //
+        Genre::create([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('genres.index')
+            ->with('success', 'ジャンルを登録しました。');
     }
 
     /**
