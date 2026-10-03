@@ -9,7 +9,8 @@ class RankingController extends Controller
 {
     public function index()
     {
-        $rankedBooks = Book::withAvg('reviews', 'rating')
+        $rankedBooks = Book::withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->having('reviews_avg_rating', '>=', 4)
             ->orderByDesc('reviews_avg_rating')
             ->limit(10)
