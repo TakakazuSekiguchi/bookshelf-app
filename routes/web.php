@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 //コントローラー
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\RankingController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewLikeController;
 use App\Http\Controllers\ReadingPlanController;
 use App\Http\Controllers\NotificationController;
@@ -88,9 +89,6 @@ Route::middleware('auth')->group(function () {
     // お気に入り一覧
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{book}', [FavoriteController::class, 'store'])->name('favorites.toggle');
-
-    // ランキング
-    Route::get('/ranking', [BookController::class, 'ranking'])->name('ranking.index');
 });
 
 //ログイン前：
@@ -99,3 +97,6 @@ Route::get('/books', [BookController::class, 'index'])->name('books.index');
 
 // 書籍詳細
 Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+
+// ランキング
+Route::get('/ranking', [RankingController::class, 'index'])->name('ranking.index');
