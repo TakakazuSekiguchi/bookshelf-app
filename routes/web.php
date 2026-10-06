@@ -3,7 +3,7 @@
 // use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-//コントローラー
+// コントローラー
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\FavoriteController;
@@ -14,15 +14,14 @@ use App\Http\Controllers\ReadingPlanController;
 use App\Http\Controllers\NotificationController;
 
 // 認証処理：コントローラー
-use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\RegisteredUserController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
-// 一般ユーザー：会員登録・ログイン
+// 会員登録・ログイン
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-//ログイン後：
+// ログイン後：
 Route::middleware('auth')->group(function () {
     // 書籍登録
     Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
@@ -64,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/favorites/{book}', [FavoriteController::class, 'store'])->name('favorites.toggle');
 });
 
-//ログイン前：
+// ログイン前：
 // 書籍一覧（トップ）
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 

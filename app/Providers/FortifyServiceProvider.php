@@ -13,6 +13,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
+use App\Http\Requests\LoginRequest;
 use Laravel\Fortify\Contracts\LogoutResponse;
 use App\Http\Responses\LogoutResponse as CustomLogoutResponse;
 
@@ -23,6 +25,11 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(
+            FortifyLoginRequest::class,
+            LoginRequest::class
+        );
+
         // FortifyのLogoutResponseが呼び出された際に、
         // app側で実装したLogoutResponseを使用するようにサービスコンテナへ登録
         $this->app->singleton(
