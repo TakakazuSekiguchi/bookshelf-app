@@ -61,6 +61,12 @@ Route::middleware('auth')->group(function () {
     // お気に入り一覧
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{book}', [FavoriteController::class, 'store'])->name('favorites.toggle');
+
+    // マイ読書レポート
+    Route::get('/reports', [ReadingPlanController::class, 'index'])->name('reports.index');
+
+    // 読書計画
+    Route::get('/reading-plans', [ReadingPlanController::class, 'index'])->name('reading-plans.index');
 });
 
 // ログイン前：

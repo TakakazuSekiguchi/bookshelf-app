@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\SearchBookRequest;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Genre;
@@ -14,10 +15,50 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SearchBookRequest $request)
     {
-        $books = Book::paginate(10);
-        return view('books.index', compact('books'));
+        $genres = Genre::all();
+
+        $books = Book::query()
+            ->with('genres')
+            ->when($request->filled('keyword'), function ($query) use ($request) {
+                $keyword = $request->keyword;
+
+                $query->where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', "%{$keyword}%")
+                        ->orWhere('author', 'like', "%{$keyword}%");
+                });
+            })
+            ->when($request->filled('genre_id'), function ($query) use ($request) {
+                $query->whereHas('genres', function ($query) use ($request) {
+                    $query->where('genres.id', $request->genre_id);
+                });
+            });
+
+        // 並び順
+        switch ($request->sort) {
+            case 'oldest':
+                $books->orderBy('published_date', 'asc');
+                break;
+
+            case 'rating':
+                $books->withAvg('reviews', 'rating')
+                    ->orderByDesc('reviews_avg_rating');
+                break;
+
+            case 'title':
+                $books->orderBy('title', 'asc');
+                break;
+
+            case 'newest':
+            default:
+                $books->orderBy('published_date', 'desc');
+                break;
+        }
+
+        $books = $books->paginate(10)->withQueryString();
+
+        return view('books.index', compact('books', 'genres'));
     }
 
     /**
