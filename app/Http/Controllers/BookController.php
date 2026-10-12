@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Client\ConnectionException;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Requests\SearchBookRequest;
+use App\Http\Requests\SearchISBNRequest;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Genre;
@@ -68,6 +72,75 @@ class BookController extends Controller
     {
         $genres = Genre::all();
         return view('books.create', compact('genres'));
+    }
+
+    public function searchIsbn(SearchISBNRequest $request)
+    {
+        // 1. バリデーション済みのISBNを取得
+        $isbn = $request->validated()['isbn'];
+
+        try {
+            // 2. Google Books APIにリクエストを送信
+            $response = Http::connectTimeout(3)
+                ->timeout(5)
+                ->get('https://www.googleapis.com/books/v1/volumes', [
+                    'q' => 'isbn:' . $isbn,
+                    'maxResults' => 1,
+                    'key' => config('services.google_books.api_key'),
+                ]);
+
+            // 3. APIからエラーレスポンスが返された場合
+            if ($response->failed()) {
+                Log::warning('Google Books API returned an error.', [
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+
+                return response()->json([
+                    'message' => '書籍情報の取得に失敗しました。',
+                ], 502);
+            }
+
+            // 4. JSONレスポンスを取得
+            $data = $response->json();
+
+            // 5. 書籍が見つからない場合
+            if (empty($data['items'][0]['volumeInfo'])) {
+                return response()->json([
+                    'message' => '書籍情報が見つかりませんでした。',
+                ], 404);
+            }
+
+            // 6. 書籍情報を取り出す
+            $volumeInfo = $data['items'][0]['volumeInfo'];
+
+            // 7. JavaScriptが使用する形式に整形して返す
+            return response()->json([
+                'title' => $volumeInfo['title'] ?? '',
+                'author' => implode(', ', $volumeInfo['authors'] ?? []),
+                'description' => $volumeInfo['description'] ?? '',
+                'image_url' => $volumeInfo['imageLinks']['thumbnail'] ?? '',
+                'published_date' => $volumeInfo['publishedDate'] ?? '',
+            ]);
+
+        } catch (ConnectionException $e) {
+            // 8. APIとの接続に失敗した場合
+            Log::warning('Google Books API connection failed.');
+
+            return response()->json([
+                'message' => 'Google Books APIに接続できませんでした。',
+            ], 502);
+
+        } catch (\Throwable $e) {
+            // 9. その他の予期しないエラー
+            Log::error('ISBN search failed.', [
+                'exception' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => '書籍情報の検索中にエラーが発生しました。',
+            ], 500);
+        }
     }
 
     /**
