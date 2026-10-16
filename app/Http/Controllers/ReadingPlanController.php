@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReadingPlan;
+use App\Models\Book;
 use App\Enums\ReadingPlanStatus;
+use App\Http\Requests\StoreReadingPlanRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -52,15 +54,26 @@ class ReadingPlanController extends Controller
      */
     public function create()
     {
-        //
+        $books = Book::all();
+
+        return view('reading-plans.create', compact('books'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreReadingPlanRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        ReadingPlan::create([
+            'user_id' => auth()->id(),
+            'book_id' => $validated['book_id'],
+            'target_date' => $validated['target_date'],
+            'status' => ReadingPlanStatus::Planned,
+        ]);
+
+        return redirect()->route('reading-plans.index');
     }
 
     /**
