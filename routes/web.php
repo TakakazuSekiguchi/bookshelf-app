@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function () {
 
     // 読書計画
     Route::get('/reading-plans', [ReadingPlanController::class, 'index'])->name('reading-plans.index');
+    Route::get('/reading-plans/create', [ReadingPlanController::class, 'create'])->name('reading-plans.create');
 
     // 通知一覧
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

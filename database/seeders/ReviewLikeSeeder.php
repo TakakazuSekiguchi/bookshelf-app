@@ -24,7 +24,7 @@ class ReviewLikeSeeder extends Seeder
                 ->random(rand(0, 3));
 
             foreach ($likeUsers as $user) {
-                $user->likeReviews()->syncWithoutDetaching([
+                $user->likedReviews()->syncWithoutDetaching([
                     $review->id,
                 ]);
             }
