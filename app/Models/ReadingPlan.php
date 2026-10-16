@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Book;
+use App\Enums\ReadingPlanStatus;
 
 class ReadingPlan extends Model
 {
@@ -14,11 +15,18 @@ class ReadingPlan extends Model
         'user_id',
         'book_id',
         'status',
-        'due_date',
+        // 'due_date',
+        'target_date',
     ];
 
+    // protected $casts = [
+    //     'due_date' => 'date',
+    // ];
+
     protected $casts = [
-        'due_date' => 'date',
+        'target_date' => 'date',
+        'completed_at' => 'datetime',
+        'status' => ReadingPlanStatus::class,
     ];
 
     public function user()
