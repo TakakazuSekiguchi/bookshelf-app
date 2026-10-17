@@ -11,6 +11,7 @@ use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReviewLikeController;
 use App\Http\Controllers\ReadingPlanController;
+use App\Http\Controllers\ReadingReportController;
 use App\Http\Controllers\NotificationController;
 
 // 認証処理：コントローラー
@@ -66,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/favorites/{book}', [FavoriteController::class, 'store'])->name('favorites.toggle');
 
     // マイ読書レポート
-    Route::get('/reports', [ReadingPlanController::class, 'index'])->name('reports.index');
+    Route::get('/reports', [ReadingReportController::class, 'index'])->name('reports.index');
 
     // 読書計画
     Route::get('/reading-plans', [ReadingPlanController::class, 'index'])->name('reading-plans.index');
