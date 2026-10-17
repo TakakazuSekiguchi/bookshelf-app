@@ -98,9 +98,24 @@ class ReadingPlanController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+    // 読了する
+    public function complete(ReadingPlan $plan)
+    {
+        // ポリシーで権限チェック
+        $this->authorize('update', $plan);
+
+        $plan->update([
+            // 'target_date' => $validated['target_date'],
+            'status' => ReadingPlanStatus::Completed,
+        ]);
+
+        return redirect()->route('reading-plans.index')
+            ->with('success', '読書計画が完了しました。');
+    }
+
+
+    // 編集
     public function update(UpdateReadingPlanRequest $request, ReadingPlan $plan)
     {
         // ポリシーで権限チェック
@@ -116,11 +131,10 @@ class ReadingPlanController extends Controller
             ->with('success', '期日を更新しました。');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // 削除
     public function destroy(ReadingPlan $plan)
     {
+        // ポリシーで権限チェック
         $this->authorize('delete', $plan);
 
         $plan->delete();
