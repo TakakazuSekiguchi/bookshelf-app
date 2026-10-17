@@ -119,8 +119,13 @@ class ReadingPlanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ReadingPlan $plan)
     {
-        //
+        $this->authorize('delete', $plan);
+
+        $plan->delete();
+
+        return redirect()->route('reading-plans.index')
+            ->with('success', '読書計画を削除しました。');
     }
 }
