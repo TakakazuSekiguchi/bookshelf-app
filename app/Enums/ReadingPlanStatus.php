@@ -5,7 +5,6 @@ namespace App\Enums;
 enum ReadingPlanStatus: string
 {
     case Planned = 'planned';
-    case Reading = 'reading';
     case Completed = 'completed';
 
     /**
@@ -14,8 +13,7 @@ enum ReadingPlanStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::Planned => '読書予定',
-            self::Reading => '読書中',
+            self::Planned => '進行中',
             self::Completed => '読了',
         };
     }
@@ -26,8 +24,7 @@ enum ReadingPlanStatus: string
     public function badgeClass(): string
     {
         return match ($this) {
-            self::Planned => 'bg-gray-100 text-gray-800',
-            self::Reading => 'bg-blue-100 text-blue-800',
+            self::Planned => 'bg-gray-100 text-blue-800',
             self::Completed => 'bg-green-100 text-green-800',
         };
     }

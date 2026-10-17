@@ -6,6 +6,7 @@ use App\Models\ReadingPlan;
 use App\Models\Book;
 use App\Enums\ReadingPlanStatus;
 use App\Http\Requests\StoreReadingPlanRequest;
+use App\Http\Requests\UpdateReadingPlanRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -79,25 +80,40 @@ class ReadingPlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    // public function show(string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(ReadingPlan $plan)
     {
-        //
+        // ポリシーで権限チェック
+        $this->authorize('view', $plan);
+
+        return view('reading-plans.edit', [
+            'readingPlan' => $plan,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateReadingPlanRequest $request, ReadingPlan $plan)
     {
-        //
+        // ポリシーで権限チェック
+        $this->authorize('update', $plan);
+
+        $validated = $request->validated();
+
+        $plan->update([
+            'target_date' => $validated['target_date'],
+        ]);
+
+        return redirect()->route('reading-plans.index')
+            ->with('success', '期日を更新しました。');
     }
 
     /**
