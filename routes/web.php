@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
 
     // 通知一覧
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
 });
 
 // ログイン前：
