@@ -15,13 +15,8 @@ class ReadingPlan extends Model
         'user_id',
         'book_id',
         'status',
-        // 'due_date',
         'target_date',
     ];
-
-    // protected $casts = [
-    //     'due_date' => 'date',
-    // ];
 
     protected $casts = [
         'target_date' => 'date',
