@@ -71,10 +71,11 @@ class ReadingPlanController extends Controller
             'user_id' => auth()->id(),
             'book_id' => $validated['book_id'],
             'target_date' => $validated['target_date'],
-            'status' => ReadingPlanStatus::Planned,
+            'status' => ReadingPlanStatus::InProgress,
         ]);
 
-        return redirect()->route('reading-plans.index');
+        return redirect()->route('reading-plans.index')
+            ->with('success', '読書計画を作成しました');
     }
 
     /**
@@ -106,8 +107,8 @@ class ReadingPlanController extends Controller
         $this->authorize('update', $plan);
 
         $plan->update([
-            // 'target_date' => $validated['target_date'],
             'status' => ReadingPlanStatus::Completed,
+            'completed_at' => now(),
         ]);
 
         return redirect()->route('reading-plans.index')
@@ -123,9 +124,18 @@ class ReadingPlanController extends Controller
 
         $validated = $request->validated();
 
-        $plan->update([
+        $data = [
             'target_date' => $validated['target_date'],
-        ]);
+        ];
+
+        if (
+            $plan->status === ReadingPlanStatus::Overdue &&
+            $plan->target_date->toDateString() !== $validated['target_date']
+        ) {
+            $data['status'] = ReadingPlanStatus::InProgress;
+        }
+
+        $plan->update($data);
 
         return redirect()->route('reading-plans.index')
             ->with('success', '期日を更新しました。');
