@@ -16,6 +16,7 @@ class ReadingPlan extends Model
         'book_id',
         'status',
         'target_date',
+        'completed_at',
     ];
 
     protected $casts = [
