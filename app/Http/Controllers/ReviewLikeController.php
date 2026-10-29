@@ -10,6 +10,7 @@ use App\Models\User;
 
 class ReviewLikeController extends Controller
 {
+    // いいね
     public function store(Review $review){
         $user = auth()->user();
 
@@ -18,6 +19,7 @@ class ReviewLikeController extends Controller
             return back();
         }
 
+        // いいねがある場合は解除、いいねがない場合は「いいねを付ける」
         if ($user->likedReviews()->where('review_id', $review->id)->exists()) {
             $user->likedReviews()->detach($review->id);
         } else {

@@ -10,9 +10,7 @@ use App\Models\Book;
 
 class ReviewController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
+    // レビューの投稿
     public function store(ReviewRequest $request, Book $book)
     {
         $review = Review::create([
@@ -26,9 +24,7 @@ class ReviewController extends Controller
             ->with('success', 'レビューを投稿しました。');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // レビュー編集画面の表示
     public function edit(Review $review)
     {
         $this->authorize('update', $review);
@@ -36,9 +32,7 @@ class ReviewController extends Controller
         return view('reviews.edit', compact('review'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // レビューの編集
     public function update(ReviewRequest $request, Review $review)
     {
         $this->authorize('update', $review);
@@ -56,9 +50,7 @@ class ReviewController extends Controller
             ->with('success', 'レビューを更新しました。');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // レビューの削除
     public function destroy(Review $review)
     {
         $this->authorize('delete', $review);

@@ -10,9 +10,6 @@ use App\Models\Review;
 
 class ReviewSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         // ユーザー5人すべてを取得

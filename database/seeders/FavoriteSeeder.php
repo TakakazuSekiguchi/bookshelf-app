@@ -9,9 +9,6 @@ use App\Models\Book;
 
 class FavoriteSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $users = User::all();

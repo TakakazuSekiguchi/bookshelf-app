@@ -15,9 +15,7 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // 書籍一覧
     public function index(SearchBookApiRequest $request)
     {
         $books = Book::query()
@@ -41,9 +39,7 @@ class BookController extends Controller
         return BookResource::collection($books);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // 書籍登録
     public function store(StoreBookApiRequest $request)
     {
         $book = Book::create([
@@ -63,9 +59,7 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // 書籍詳細
     public function show(Book $book)
     {
         $book->load(['genres', 'user', 'reviews']);
@@ -73,9 +67,7 @@ class BookController extends Controller
         return new BookDetailResource($book);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // 書籍編集
     public function update(UpdateBookApiRequest $request, Book $book)
     {
         $this->authorize('update', $book);
@@ -93,9 +85,7 @@ class BookController extends Controller
         return new BookDetailResource($book);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // 書籍削除
     public function destroy(Book $book)
     {
         $this->authorize('delete', $book);

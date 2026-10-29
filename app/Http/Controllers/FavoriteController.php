@@ -8,6 +8,7 @@ use App\Models\Book;
 
 class FavoriteController extends Controller
 {
+    // お気に入り一覧
     public function index(){
         $books = auth()->user()
             ->favoriteBooks()
@@ -16,6 +17,7 @@ class FavoriteController extends Controller
         return view('favorites.index', compact('books'));
     }
 
+    // お気に入り登録
     public function store(Book $book)
     {
         $user = auth()->user();

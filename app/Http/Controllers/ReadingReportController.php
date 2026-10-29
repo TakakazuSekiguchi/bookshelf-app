@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReadingReportController extends Controller
 {
+    // マイ読書レポート（マイレポート）の表示
     public function index()
     {
         $userId = Auth::id();
