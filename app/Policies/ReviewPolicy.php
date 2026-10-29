@@ -8,7 +8,6 @@ use Illuminate\Auth\Access\Response;
 
 class ReviewPolicy
 {
-
     // レビューの編集
     public function update(User $user, Review $review): bool
     {

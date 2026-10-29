@@ -10,9 +10,6 @@ use App\Models\Genre;
 
 class BookSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         // $user = User::first(); //山田太郎

@@ -12,9 +12,7 @@ use Illuminate\Validation\Rule;
 
 class ReadingPlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // 読書計画一覧
     public function index(Request $request)
     {
         // 状態の取得・バリデーション
@@ -50,9 +48,7 @@ class ReadingPlanController extends Controller
         ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // 読書計画登録画面の表示
     public function create()
     {
         $books = Book::all();
@@ -60,9 +56,7 @@ class ReadingPlanController extends Controller
         return view('reading-plans.create', compact('books'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // 読書計画登録
     public function store(StoreReadingPlanRequest $request)
     {
         $validated = $request->validated();
@@ -78,17 +72,7 @@ class ReadingPlanController extends Controller
             ->with('success', '読書計画を作成しました');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(string $id)
-    // {
-    //     //
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // 読書計画編集画面の表示
     public function edit(ReadingPlan $plan)
     {
         // ポリシーで権限チェック
@@ -99,8 +83,7 @@ class ReadingPlanController extends Controller
         ]);
     }
 
-
-    // 読了する
+    // 読書計画：「読了する」の処理
     public function complete(ReadingPlan $plan)
     {
         // ポリシーで権限チェック
@@ -115,8 +98,7 @@ class ReadingPlanController extends Controller
             ->with('success', '読書計画が完了しました。');
     }
 
-
-    // 編集
+    // 読書計画：「編集」の処理
     public function update(UpdateReadingPlanRequest $request, ReadingPlan $plan)
     {
         // ポリシーで権限チェック
@@ -141,7 +123,7 @@ class ReadingPlanController extends Controller
             ->with('success', '期日を更新しました。');
     }
 
-    // 削除
+    // 読書計画：「削除」の処理
     public function destroy(ReadingPlan $plan)
     {
         // ポリシーで権限チェック

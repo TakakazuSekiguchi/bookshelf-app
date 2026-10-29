@@ -16,9 +16,7 @@ use App\Models\Genre;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // 書籍一覧
     public function index(SearchBookRequest $request)
     {
         $genres = Genre::all();
@@ -65,15 +63,14 @@ class BookController extends Controller
         return view('books.index', compact('books', 'genres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // 書籍登録画面の表示
     public function create()
     {
         $genres = Genre::all();
         return view('books.create', compact('genres'));
     }
 
+    // ISBN検索
     public function searchIsbn(SearchISBNRequest $request)
     {
         // 1. バリデーション済みのISBNを取得
@@ -143,9 +140,7 @@ class BookController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // 書籍登録
     public function store(StoreBookRequest $request)
     {
         $book = Book::create([
@@ -163,9 +158,7 @@ class BookController extends Controller
         return redirect()->route('books.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // 書籍詳細
     public function show(Book $book)
     {
         $book = Book::with('genres')
@@ -176,9 +169,7 @@ class BookController extends Controller
         return view('books.show', compact('book'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // 書籍編集画面の表示
     public function edit(Book $book)
     {
         $this->authorize('update', $book);
@@ -187,9 +178,7 @@ class BookController extends Controller
         return view('books.edit', compact('book', 'genres'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // 書籍編集
     public function update(UpdateBookRequest $request, Book $book)
     {
         $this->authorize('update', $book);
@@ -210,9 +199,7 @@ class BookController extends Controller
             ->with('success', '書籍を更新しました。');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // 書籍削除
     public function destroy(Book $book)
     {
         $this->authorize('delete', $book);

@@ -12,9 +12,6 @@ use Illuminate\Support\Carbon;
 
 class ReadingPlanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         // ユーザーを取得

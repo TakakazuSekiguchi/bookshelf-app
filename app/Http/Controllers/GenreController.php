@@ -9,9 +9,7 @@ use App\Models\Genre;
 
 class GenreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // ジャンル一覧
     public function index()
     {
         $genres = Genre::withCount('books')->get();
@@ -19,17 +17,13 @@ class GenreController extends Controller
         return view('genres.index', compact('genres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // ジャンル登録画面の表示
     public function create()
     {
         return view('genres.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // ジャンル登録
     public function store(StoreGenreRequest $request)
     {
         Genre::create([
@@ -40,9 +34,7 @@ class GenreController extends Controller
             ->with('success', 'ジャンルを登録しました。');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // ジャンル詳細
     public function show(Genre $genre)
     {
         $books = $genre->books()->paginate(10);
@@ -50,17 +42,13 @@ class GenreController extends Controller
         return view('genres.show', compact('genre', 'books'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // ジャンル編集画面の表示
     public function edit(Genre $genre)
     {
         return view('genres.edit', compact('genre'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // ジャンル編集
     public function update(StoreGenreRequest $request, Genre $genre)
     {
         $genre->update([
@@ -71,9 +59,7 @@ class GenreController extends Controller
             ->with('success', 'ジャンルを更新しました。');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // ジャンル削除
     public function destroy(Genre $genre)
     {
         if ($genre->books()->exists()) {

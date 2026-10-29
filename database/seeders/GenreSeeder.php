@@ -8,9 +8,6 @@ use App\Models\Genre;
 
 class GenreSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Genre::firstOrCreate(['name' => '小説']);

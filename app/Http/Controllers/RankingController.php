@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class RankingController extends Controller
 {
+    // ランキング表示
     public function index()
     {
         $rankedBooks = Book::withCount('reviews')

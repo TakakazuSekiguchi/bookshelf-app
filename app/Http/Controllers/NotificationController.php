@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 class NotificationController extends Controller
 {
+    // 通知一覧
     public function index()
     {
         $notifications = auth()->user()
@@ -16,6 +17,7 @@ class NotificationController extends Controller
         return view('notifications.index', compact('notifications'));
     }
 
+    // 既読処理
     public function read(string $notification)
     {
         $user = auth()->user();

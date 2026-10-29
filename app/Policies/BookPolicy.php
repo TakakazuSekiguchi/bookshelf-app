@@ -8,35 +8,15 @@ use Illuminate\Auth\Access\Response;
 
 class BookPolicy
 {
-    /**
-     * Determine whether the user can update the model.
-     */
+    // 書籍編集
     public function update(User $user, Book $book): bool
     {
         return $user->id === $book->user_id;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
+    // 書籍削除
     public function delete(User $user, Book $book): bool
     {
         return $user->id === $book->user_id;
     }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    // public function restore(User $user, Book $book): bool
-    // {
-    //     //
-    // }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    // public function forceDelete(User $user, Book $book): bool
-    // {
-    //     //
-    // }
 }
