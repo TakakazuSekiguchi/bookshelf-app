@@ -28,9 +28,9 @@ class BookController extends Controller
                         ->orWhere('author', 'like', "%{$keyword}%");
                 });
             })
-            ->when($request->filled('genre_id'), function ($query) use ($request) {
+            ->when($request->filled('genre'), function ($query) use ($request) {
                 $query->whereHas('genres', function ($query) use ($request) {
-                    $query->where('genres.id', $request->genre_id);
+                    $query->where('genres.id', $request->genre);
                 });
             });
 
