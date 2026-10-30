@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('reading-plans:daily-batch')
-            ->dailyAt('00:00');
+            ->dailyAt('20:00');
     }
 
     /**

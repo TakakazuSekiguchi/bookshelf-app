@@ -40,16 +40,16 @@ class ReadingPlanReminderNotification extends Notification
     {
         $messages = [
             'three_days_before' => [
-                'title' => '読書計画の期日が近づいています',
-                'body' => "{$this->readingPlan->book->title} の期日は3日後です。",
+                'title' => '読書計画リマインド — 期限まであと 3 日',
+                'body' => "「{$this->readingPlan->book->title}」の期限まで残り 3 日です。引き続き読書を進めましょう。",
             ],
             'on_due_date' => [
-                'title' => '読書計画の期日です',
-                'body' => "{$this->readingPlan->book->title} の期日は本日です。",
+                'title' => '読書計画 — 本日が期限',
+                'body' => "「{$this->readingPlan->book->title}」は本日が期限です。読了済みなら完了登録を、もう少し必要なら期限を変更してください。",
             ],
             'three_days_after' => [
-                'title' => '読書計画の期日を過ぎています',
-                'body' => "{$this->readingPlan->book->title} の期日から3日が経過しました。",
+                'title' => '読書計画 — 期限超過 3 日経過',
+                'body' => "「{$this->readingPlan->book->title}」の期限から 3 日が経過しました。読了済みなら完了登録、続けるなら期限を変更してください。",
             ],
         ];
 
