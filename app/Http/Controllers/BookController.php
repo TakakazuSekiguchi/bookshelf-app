@@ -151,11 +151,12 @@ class BookController extends Controller
             'published_date' => $request->published_date,
             'description' => $request->description,
             'image_url' => $request->image_url,
-            // 'genre_id',
         ]);
 
         $book->genres()->attach($request->genres);
-        return redirect()->route('books.index');
+        
+        return redirect()->route('books.index')
+            ->with('success', '書籍を登録しました。');
     }
 
     // 書籍詳細
