@@ -27,6 +27,7 @@ class ReviewController extends Controller
     // レビュー編集画面の表示
     public function edit(Review $review)
     {
+        // 編集画面の表示にも更新権限（update）を使用する
         $this->authorize('update', $review);
 
         return view('reviews.edit', compact('review'));
