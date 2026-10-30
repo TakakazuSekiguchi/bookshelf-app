@@ -173,7 +173,9 @@ class BookController extends Controller
     // 書籍編集画面の表示
     public function edit(Book $book)
     {
+        // 編集画面の表示にも更新権限（update）を使用する
         $this->authorize('update', $book);
+
         $genres = Genre::all();
 
         return view('books.edit', compact('book', 'genres'));
