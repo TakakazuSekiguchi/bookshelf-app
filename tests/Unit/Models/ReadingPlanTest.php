@@ -72,7 +72,7 @@ class ReadingPlanTest extends TestCase
         );
     }
 
-    public function test_booksリレーションが正しく定義されていること()
+    public function test_bookリレーションが正しく定義されていること()
     {
         $readingplan = new ReadingPlan();
 
