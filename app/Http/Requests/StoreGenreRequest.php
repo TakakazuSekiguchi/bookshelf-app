@@ -14,7 +14,7 @@ class StoreGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
+            'name' => ['required', 'string', 'max:255'],
         ];
     }
 
@@ -22,7 +22,7 @@ class StoreGenreRequest extends FormRequest
     {
         return [
             'name.required' => 'ジャンル名は必須です。',
-            'name.max' => 'ジャンル名は100文字以内で入力してください。',
+            'name.max' => 'ジャンル名は255文字以内で入力してください。',
         ];
     }
 }
