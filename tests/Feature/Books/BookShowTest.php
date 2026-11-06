@@ -4,6 +4,7 @@ namespace Tests\Feature\Books;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\Book;
 use App\Models\Genre;
@@ -15,7 +16,7 @@ class BookShowTest extends TestCase
     use RefreshDatabase;
 
     public function test_ゲストが書籍詳細画面にアクセスできる(): void
-    {
+    {        
         // 書籍を作成
         $book = Book::factory()->create();
 

@@ -4,6 +4,7 @@ namespace Tests\Feature\Books;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\Book;
 use App\Models\User;

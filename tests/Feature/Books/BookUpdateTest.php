@@ -4,6 +4,7 @@ namespace Tests\Feature\Books;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\Book;
 use App\Models\Genre;
@@ -15,7 +16,7 @@ class BookUpdateTest extends TestCase
 
     // 正常系
     public function test_書籍情報を正常に更新できる(): void
-    {
+    {        
         // ユーザーと書籍を作成
         $user = User::factory()->create();
         $book = Book::factory()->create([

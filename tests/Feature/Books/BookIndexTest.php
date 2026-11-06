@@ -4,6 +4,7 @@ namespace Tests\Feature\Books;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\Book;
 
@@ -12,7 +13,7 @@ class BookIndexTest extends TestCase
     use RefreshDatabase;
 
     public function test_登録された書籍が一覧に表示される()
-    {
+    {        
         $book = Book::factory()->create([
             'title' => 'テスト書籍',
             'author' => 'テスト著者',

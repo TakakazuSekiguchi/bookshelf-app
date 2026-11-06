@@ -4,6 +4,7 @@ namespace Tests\Feature\Books;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\Book;
 use App\Models\Genre;
@@ -15,7 +16,7 @@ class BookStoreTest extends TestCase
 
     // 正常系
     public function test_書籍が正しく登録できる(): void
-    {
+    {        
         // ユーザーを作成
         $user = User::factory()->create();
 
