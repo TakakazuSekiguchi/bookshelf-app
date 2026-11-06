@@ -199,7 +199,7 @@ class BookController extends Controller
         $book->genres()->sync($request->genres);
 
         return redirect()->route('books.show', $book)
-            ->with('success', '書籍を更新しました。');
+            ->with('success', '書籍情報を更新しました。');
     }
 
     // 書籍削除
