@@ -17,7 +17,7 @@ class SearchBookApiRequest extends FormRequest
             'keyword' => ['nullable', 'string', 'max:255'],
             'genre_id' => ['nullable', 'integer', 'exists:genres,id'],
             'page' => ['nullable', 'integer', 'min:1'],
-            'per_page' => ['nullable', 'integer', 'min:1', 'max:10'],
+            'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
         ];
     }
 
@@ -35,7 +35,7 @@ class SearchBookApiRequest extends FormRequest
 
             'per_page.integer' => '1ページあたりの件数は整数で指定してください。',
             'per_page.min' => '1ページあたりの件数は1以上で指定してください。',
-            'per_page.max' => '1ページあたりの件数は10以下で指定してください。',
+            'per_page.max' => '1ページあたりの件数は100以下で指定してください。',
         ];
     }
 }

@@ -23,7 +23,7 @@ class StoreReadingPlanRequest extends FormRequest
     {
         return [
             'book_id.required' => 'タイトルは必須です。',
-            'book_id.*.exists' => '指定されたジャンルが存在しません。',
+            'book_id.*.exists' => '指定された書籍が存在しません。',
             'target_date.required' => '期日は必須です。',
             'target_date.date' => '正しい日付を入力してください。',
             'target_date.after_or_equal' => '今日以降の日付を入力してください。',
