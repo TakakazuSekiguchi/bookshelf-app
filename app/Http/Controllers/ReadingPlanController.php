@@ -69,7 +69,7 @@ class ReadingPlanController extends Controller
         ]);
 
         return redirect()->route('reading-plans.index')
-            ->with('success', '読書計画を作成しました');
+            ->with('success', '読書計画を作成しました。');
     }
 
     // 読書計画編集画面の表示
@@ -120,7 +120,7 @@ class ReadingPlanController extends Controller
         $plan->update($data);
 
         return redirect()->route('reading-plans.index')
-            ->with('success', '期日を更新しました。');
+            ->with('success', '読書計画を更新しました。');
     }
 
     // 読書計画：「削除」の処理
