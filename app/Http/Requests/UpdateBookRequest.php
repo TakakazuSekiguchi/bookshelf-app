@@ -16,7 +16,7 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'author' => ['required', 'string', 'max:100'],
+            'author' => ['required', 'string', 'max:255'],
             'isbn' => ['required', 'string', 'size:13', Rule::unique('books', 'isbn')->ignore($this->book)],
             'published_date' => ['nullable', 'date'],
             'description' => ['nullable', 'string'],
@@ -35,7 +35,7 @@ class UpdateBookRequest extends FormRequest
 
             'author.required' => '著者名は必須です。',
             'author.string' => '著者名は文字列で入力してください。',
-            'author.max' => '著者名は100文字以内で入力してください。',
+            'author.max' => '著者名は255文字以内で入力してください。',
 
             'isbn.required' => 'ISBN-13は必須です。',
             'isbn.size' => 'ISBN-13は13文字で入力してください。',
