@@ -9,7 +9,7 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Models\User;
 
-class BookSearchTestTest extends TestCase
+class BookSearchTest extends TestCase
 {
     use RefreshDatabase;
 
