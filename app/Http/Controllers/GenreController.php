@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
 use App\Models\Book;
 use App\Models\Genre;
 
@@ -49,7 +50,7 @@ class GenreController extends Controller
     }
 
     // ジャンル編集
-    public function update(StoreGenreRequest $request, Genre $genre)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
         $genre->update([
             'name' => $request->name,
