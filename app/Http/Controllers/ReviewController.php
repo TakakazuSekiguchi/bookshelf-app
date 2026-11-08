@@ -13,14 +13,14 @@ class ReviewController extends Controller
     // レビューの投稿
     public function store(ReviewRequest $request, Book $book)
     {
-        $review = Review::create([
+        Review::create([
             'user_id' => auth()->id(),
             'book_id' => $book->id,
             'rating' => $request->rating,
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('books.show', [$book, $review])
+        return redirect()->route('books.show', $book)
             ->with('success', 'レビューを投稿しました。');
     }
 
