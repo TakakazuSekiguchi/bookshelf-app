@@ -23,10 +23,10 @@ class ReviewRequest extends FormRequest
     {
         return [
             'rating.required' => '評価は必須です。',
-            'rating.integer' => '評価は整数で指定してください。',
-            'rating.between' => '評価は1〜5の範囲で指定してください。',
+            'rating.integer' => '評価は整数で入力してください。',
+            'rating.between' => '評価は1〜5の整数で入力してください。',
             'comment.required' => 'コメントは必須です。',
-            'comment.string' => 'コメントは文字列で指定してください。',
+            'comment.string' => 'コメントは文字列で入力してください。',
         ];
     }
 }

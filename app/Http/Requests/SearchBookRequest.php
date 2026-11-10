@@ -25,8 +25,8 @@ class SearchBookRequest extends FormRequest
             'keyword.string' => 'キーワードは文字列で入力してください。',
             'keyword.max' => 'キーワードは255文字以内で入力してください。',
 
-            'genre_id.integer' => 'ジャンルIDは整数で指定してください。',
-            'genre_id.exists' => '指定されたジャンルは存在しません。',
+            'genre_id.integer' => 'ジャンルIDは整数で入力してください。',
+            'genre_id.exists' => '選択されたジャンルは存在しません。',
         ];
     }
 }
