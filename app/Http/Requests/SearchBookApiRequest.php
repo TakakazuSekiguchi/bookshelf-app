@@ -24,18 +24,18 @@ class SearchBookApiRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'keyword.string' => 'キーワードは文字列で指定してください。',
-            'keyword.max' => 'キーワードは255文字以内で指定してください。',
+            'keyword.string' => 'キーワードは文字列で入力してください。',
+            'keyword.max' => 'キーワードは255文字以内で入力してください。',
 
-            'genre_id.integer' => 'ジャンルIDは整数で指定してください。',
-            'genre_id.exists' => '指定されたジャンルIDは存在しません。',
+            'genre_id.integer' => 'ジャンルIDは整数で入力してください。',
+            'genre_id.exists' => '選択されたジャンルは存在しません。',
 
-            'page.integer' => 'ページ番号は整数で指定してください。',
-            'page.min' => 'ページ番号は1以上で指定してください。',
+            'page.integer' => 'ページ番号は整数で入力してください。',
+            'page.min' => 'ページ番号は1以上で入力してください。',
 
-            'per_page.integer' => '1ページあたりの件数は整数で指定してください。',
-            'per_page.min' => '1ページあたりの件数は1以上で指定してください。',
-            'per_page.max' => '1ページあたりの件数は100以下で指定してください。',
+            'per_page.integer' => '1ページあたりの件数は整数で入力してください。',
+            'per_page.min' => '1ページあたりの件数は1以上で入力してください。',
+            'per_page.max' => '1ページあたりの件数は100以下で入力してください。',
         ];
     }
 }
