@@ -155,7 +155,7 @@ class BookController extends Controller
 
         $book->genres()->attach($request->genres);
         
-        return redirect()->route('books.index')
+        return redirect()->route('books.show', $book)
             ->with('success', '書籍を登録しました。');
     }
 
