@@ -20,6 +20,8 @@ class BookController extends Controller
     {
         $books = Book::query()
             ->with(['genres', 'user'])
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
             ->when($request->filled('keyword'), function ($query) use ($request) {
                 $keyword = $request->keyword;
 
