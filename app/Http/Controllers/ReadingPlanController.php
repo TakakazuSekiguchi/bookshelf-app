@@ -76,7 +76,7 @@ class ReadingPlanController extends Controller
     public function edit(ReadingPlan $plan)
     {
         // ポリシーで権限チェック
-        $this->authorize('view', $plan);
+        $this->authorize('update', $plan);
 
         return view('reading-plans.edit', [
             'readingPlan' => $plan,

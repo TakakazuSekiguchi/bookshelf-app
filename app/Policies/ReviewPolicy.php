@@ -19,10 +19,4 @@ class ReviewPolicy
     {
         return $user->id === $review->user_id;
     }
-
-    // レビューに対するいいね
-    public function like(User $user, Review $review)
-    {
-        return $user->id !== $review->user_id;
-    }
 }

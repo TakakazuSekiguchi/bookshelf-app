@@ -86,34 +86,6 @@ class ReviewLikeTest extends TestCase
     }
 
     // 異常系
-    public function test_自分のレビューにはいいねができない(): void
-    {
-        // ログインユーザーを作成
-        $user = User::factory()->create();
-
-        // 書籍を作成
-        $book = Book::factory()->create();
-
-        // 自分のレビューを作成
-        $review = Review::factory()->create([
-            'user_id' => $user->id,
-            'book_id' => $book->id,
-        ]);
-
-        // 自分のレビューにいいね操作を行う
-        $response = $this->actingAs($user)
-            ->post(route('reviews.like', $review));
-
-        // レスポンス確認
-        $response->assertRedirect();
-
-        // review_likeテーブルにいいねが登録されていないことを確認
-        $this->assertDatabaseMissing('review_like', [
-            'user_id' => $user->id,
-            'review_id' => $review->id,
-        ]);
-    }
-
     public function test_未ログインの場合、レビューにいいねができない(): void
     {
         // 別ユーザーを作成（レビューを書いた人、いいねをされるユーザー）
