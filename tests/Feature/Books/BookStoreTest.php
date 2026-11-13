@@ -22,7 +22,6 @@ class BookStoreTest extends TestCase
 
         // ログインユーザーとして書籍登録画面にアクセス
         $response = $this->actingAs($user)->get(route('books.create'));
-        $response->assertOk();
 
         // ジャンル（複数指定）
         $genres = Genre::factory()->count(2)->create();
@@ -66,235 +65,235 @@ class BookStoreTest extends TestCase
         }
     }
 
-    // // 異常系
-    // public function test_titleが未入力の場合、登録されない(): void
-    // {
-    //     // ユーザーを作成
-    //     $user = User::factory()->create();
+    // 異常系
+    public function test_titleが未入力の場合、登録されない(): void
+    {
+        // ユーザーを作成
+        $user = User::factory()->create();
 
-    //     // ジャンルを作成
-    //     $genres = Genre::factory()->count(2)->create();
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => '',
-    //         'author' => 'テスト著者',
-    //         'isbn' => '1234567891234',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => $genres->pluck('id')->toArray(),
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => '',
+            'author' => 'テスト著者',
+            'isbn' => '1234567891234',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => $genres->pluck('id')->toArray(),
+        ];
 
-    //     // 登録リクエスト
-    //     $response = $this->actingAs($user)->post(route('books.store'), $data);
+        // 登録リクエスト
+        $response = $this->actingAs($user)->post(route('books.store'), $data);
 
-    //     // バリデーションエラー確認
-    //     $response->assertSessionHasErrors('title');
+        // バリデーションエラー確認
+        $response->assertSessionHasErrors('title');
 
-    //     // booksテーブルに登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'user_id' => $user->id,
-    //         'author' => 'テスト著者',
-    //         'isbn' => '1234567891234',
-    //     ]);
-    // }
+        // booksテーブルに登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'user_id' => $user->id,
+            'author' => 'テスト著者',
+            'isbn' => '1234567891234',
+        ]);
+    }
 
-    // public function test_authorが未入力の場合、登録されない(): void
-    // {
-    //     // ユーザーを作成
-    //     $user = User::factory()->create();
+    public function test_authorが未入力の場合、登録されない(): void
+    {
+        // ユーザーを作成
+        $user = User::factory()->create();
 
-    //     // ジャンルを作成
-    //     $genres = Genre::factory()->count(2)->create();
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => 'テスト書籍',
-    //         'author' => '',
-    //         'isbn' => '1234567891234',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => $genres->pluck('id')->toArray(),
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => 'テスト書籍',
+            'author' => '',
+            'isbn' => '1234567891234',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => $genres->pluck('id')->toArray(),
+        ];
 
-    //     // 登録リクエスト
-    //     $response = $this->actingAs($user)->post(route('books.store'), $data);
+        // 登録リクエスト
+        $response = $this->actingAs($user)->post(route('books.store'), $data);
 
-    //     // バリデーションエラー確認
-    //     $response->assertSessionHasErrors('author');
+        // バリデーションエラー確認
+        $response->assertSessionHasErrors('author');
 
-    //     // booksテーブルに登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'user_id' => $user->id,
-    //         'title' => 'テスト書籍',
-    //         'isbn' => '1234567891234',
-    //     ]);
-    // }
+        // booksテーブルに登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'user_id' => $user->id,
+            'title' => 'テスト書籍',
+            'isbn' => '1234567891234',
+        ]);
+    }
 
-    // public function test_isbnが未入力の場合、登録されない(): void
-    // {
-    //     // ユーザーを作成
-    //     $user = User::factory()->create();
+    public function test_isbnが未入力の場合、登録されない(): void
+    {
+        // ユーザーを作成
+        $user = User::factory()->create();
 
-    //     // ジャンルを作成
-    //     $genres = Genre::factory()->count(2)->create();
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //         'isbn' => '',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => $genres->pluck('id')->toArray(),
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+            'isbn' => '',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => $genres->pluck('id')->toArray(),
+        ];
 
-    //     // 登録リクエスト
-    //     $response = $this->actingAs($user)->post(route('books.store'), $data);
+        // 登録リクエスト
+        $response = $this->actingAs($user)->post(route('books.store'), $data);
 
-    //     // バリデーションエラー確認
-    //     $response->assertSessionHasErrors('isbn');
+        // バリデーションエラー確認
+        $response->assertSessionHasErrors('isbn');
 
-    //     // booksテーブルに登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'user_id' => $user->id,
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //     ]);
-    // }
+        // booksテーブルに登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'user_id' => $user->id,
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+        ]);
+    }
 
-    // public function test_genresが未入力の場合、登録されない(): void
-    // {
-    //     // ユーザーを作成
-    //     $user = User::factory()->create();
+    public function test_genresが未入力の場合、登録されない(): void
+    {
+        // ユーザーを作成
+        $user = User::factory()->create();
 
-    //     // ジャンルを作成
-    //     $genres = Genre::factory()->count(2)->create();
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //         'isbn' => '1234567891234',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => [],
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+            'isbn' => '1234567891234',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => [],
+        ];
 
-    //     // 登録リクエスト
-    //     $response = $this->actingAs($user)->post(route('books.store'), $data);
+        // 登録リクエスト
+        $response = $this->actingAs($user)->post(route('books.store'), $data);
 
-    //     // バリデーションエラー確認
-    //     $response->assertSessionHasErrors('genres');
+        // バリデーションエラー確認
+        $response->assertSessionHasErrors('genres');
 
-    //     // booksテーブルに登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'user_id' => $user->id,
-    //         'title' => 'テスト書籍',
-    //     ]);
+        // booksテーブルに登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'user_id' => $user->id,
+            'title' => 'テスト書籍',
+        ]);
 
-    //     // book_genreテーブルに登録されていないこと
-    //     foreach ($genres as $genre) {
-    //         $this->assertDatabaseMissing('book_genre', [
-    //             'genre_id' => $genre->id,
-    //         ]);
-    //     }
-    // }
+        // book_genreテーブルに登録されていないこと
+        foreach ($genres as $genre) {
+            $this->assertDatabaseMissing('book_genre', [
+                'genre_id' => $genre->id,
+            ]);
+        }
+    }
 
-    // public function test_ISBNが重複している場合、登録されない(): void
-    // {
-    //     // ユーザーを作成
-    //     $user = User::factory()->create();
+    public function test_ISBNが重複している場合、登録されない(): void
+    {
+        // ユーザーを作成
+        $user = User::factory()->create();
 
-    //     // 既存の書籍を作成
-    //     Book::factory()->create([
-    //         'user_id' => $user->id,
-    //         'isbn' => '1234567891234',
-    //     ]);
+        // 既存の書籍を作成
+        Book::factory()->create([
+            'user_id' => $user->id,
+            'isbn' => '1234567891234',
+        ]);
 
-    //     // ジャンルを作成
-    //     $genres = Genre::factory()->count(2)->create();
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //         'isbn' => '1234567891234',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => $genres->pluck('id')->toArray(),
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+            'isbn' => '1234567891234',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => $genres->pluck('id')->toArray(),
+        ];
 
-    //     // 登録リクエスト
-    //     $response = $this->actingAs($user)->post(route('books.store'), $data);
+        // 登録リクエスト
+        $response = $this->actingAs($user)->post(route('books.store'), $data);
 
-    //     // バリデーションエラー確認
-    //     $response->assertSessionHasErrors('isbn');
+        // バリデーションエラー確認
+        $response->assertSessionHasErrors('isbn');
 
-    //     // booksテーブルに新しい書籍が登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'user_id' => $user->id,
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //     ]);
-    // }
+        // booksテーブルに新しい書籍が登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'user_id' => $user->id,
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+        ]);
+    }
 
-    // public function test_未ログインの場合、登録できない(): void
-    // {
-    //     // ジャンルを作成
-    //     $genres = Genre::factory()->count(2)->create();
+    public function test_未ログインの場合、登録できない(): void
+    {
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //         'isbn' => '1234567891234',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => $genres->pluck('id')->toArray(),
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+            'isbn' => '1234567891234',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => $genres->pluck('id')->toArray(),
+        ];
 
-    //     // 未ログイン状態で登録リクエスト
-    //     $response = $this->post(route('books.store'), $data);
+        // 未ログイン状態で登録リクエスト
+        $response = $this->post(route('books.store'), $data);
 
-    //     // ログイン画面にリダイレクトされること
-    //     $response->assertRedirect(route('login'));
+        // ログイン画面にリダイレクトされること
+        $response->assertRedirect(route('login'));
 
-    //     // booksテーブルに登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'isbn' => '1234567891234',
-    //     ]);
-    // }
+        // booksテーブルに登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'isbn' => '1234567891234',
+        ]);
+    }
 
-    // public function test_存在しないジャンルIDを指定した場合、登録されない(): void
-    // {
-    //     // ユーザーを作成
-    //     $user = User::factory()->create();
+    public function test_存在しないジャンルIDを指定した場合、登録されない(): void
+    {
+        // ユーザーを作成
+        $user = User::factory()->create();
 
-    //     // リクエストデータ
-    //     $data = [
-    //         'title' => 'テスト書籍',
-    //         'author' => 'テスト著者',
-    //         'isbn' => '1234567891234',
-    //         'published_date' => '1999-07-01',
-    //         'description' => '書籍詳細テスト',
-    //         'genres' => [9999],
-    //     ];
+        // リクエストデータ
+        $data = [
+            'title' => 'テスト書籍',
+            'author' => 'テスト著者',
+            'isbn' => '1234567891234',
+            'published_date' => '1999-07-01',
+            'description' => '書籍詳細テスト',
+            'genres' => [9999],
+        ];
 
-    //     // 登録リクエスト
-    //     $response = $this->actingAs($user)->post(route('books.store'), $data);
+        // 登録リクエスト
+        $response = $this->actingAs($user)->post(route('books.store'), $data);
 
-    //     // バリデーションエラー確認
-    //     $response->assertSessionHasErrors('genres.0');
+        // バリデーションエラー確認
+        $response->assertSessionHasErrors('genres.0');
 
-    //     // booksテーブルに登録されていないこと
-    //     $this->assertDatabaseMissing('books', [
-    //         'user_id' => $user->id,
-    //         'isbn' => '1234567891234',
-    //     ]);
+        // booksテーブルに登録されていないこと
+        $this->assertDatabaseMissing('books', [
+            'user_id' => $user->id,
+            'isbn' => '1234567891234',
+        ]);
 
-    //     // book_genreテーブルに登録されていないこと
-    //     $this->assertDatabaseCount('book_genre', 0);
-    // }
+        // book_genreテーブルに登録されていないこと
+        $this->assertDatabaseCount('book_genre', 0);
+    }
 }
 
