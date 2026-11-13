@@ -51,7 +51,7 @@ class BookDestroyTest extends TestCase
         // ログイン画面へリダイレクトされること
         $response->assertRedirect(route('login'));
 
-        // booksテーブルにデータが保存されていないことを確認
+        // booksテーブルにデータが残っていることを確認
         $this->assertDatabaseHas('books', [
             'id' => $book->id,
             'title' => '削除前のタイトル',
