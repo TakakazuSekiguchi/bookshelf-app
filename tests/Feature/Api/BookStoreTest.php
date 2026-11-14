@@ -386,4 +386,27 @@ class BookStoreTest extends TestCase
             'isbn' => '1234567890123',
         ]);
     }
+
+    public function test_未認証ユーザーは書籍を登録できない(): void
+    {
+        // ジャンルを作成
+        $genres = Genre::factory()->count(2)->create();
+
+        // 未認証ユーザーとして書籍登録APIにアクセス
+        $response = $this->postJson('/api/v1/books', [
+                'title' => 'テスト書籍',
+                'author' => 'テスト著者',
+                'isbn' => '1234567890123',
+                'published_date' => '2025-01-01',
+                'genres' => $genres->pluck('id')->toArray(),
+            ]);
+
+        // 認証エラーを確認
+        $response->assertUnauthorized();
+
+        // 書籍が登録されていないことを確認
+        $this->assertDatabaseMissing('books', [
+            'isbn' => '1234567890123',
+        ]);
+    }
 }
