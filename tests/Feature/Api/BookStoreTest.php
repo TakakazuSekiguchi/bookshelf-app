@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Book;
 use App\Models\Genre;
-use App\Models\Review;
 use App\Models\User;
 
 class BookStoreTest extends TestCase
@@ -75,6 +74,11 @@ class BookStoreTest extends TestCase
 
         // 登録成功を確認
         $response->assertCreated();
+
+        // JSONレスポンスを確認
+        $response->assertJsonPath('data.title', 'テスト書籍');
+        $response->assertJsonPath('data.author', 'テスト著者');
+        $response->assertJsonPath('data.isbn', '1234567890123');
 
         // 登録した書籍を取得
         $book = Book::where('isbn', '1234567890123')->firstOrFail();
