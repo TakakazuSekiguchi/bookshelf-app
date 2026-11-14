@@ -11,6 +11,8 @@ use App\Models\User;
 
 class BookDestroyTest extends TestCase
 {
+    use RefreshDatabase;
+
     // 正常系
     public function test_書籍を正常に削除できる(): void
     {
