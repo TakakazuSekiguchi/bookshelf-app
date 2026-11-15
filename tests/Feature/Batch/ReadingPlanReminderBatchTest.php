@@ -38,7 +38,7 @@ class ReadingPlanReminderBatchTest extends TestCase
         // ユーザーを作成
         $user = User::factory()->create();
 
-        // 期日3日前の読書計画を作成（期日：2026-11-18）
+        // 期日が3日後の読書計画を作成（期日：2026-11-18）
         $readingPlan = ReadingPlan::factory()->create([
             'user_id' => $user->id,
             'target_date' => now()->addDays(3)->toDateString(),
@@ -85,7 +85,7 @@ class ReadingPlanReminderBatchTest extends TestCase
         // ユーザーを作成
         $user = User::factory()->create();
 
-        // 期日当日の読書計画を作成（期日：2026-11-15）
+        // 期日が当日の読書計画を作成（期日：2026-11-15）
         $readingPlan = ReadingPlan::factory()->create([
             'user_id' => $user->id,
             'target_date' => now()->toDateString(),
@@ -132,7 +132,7 @@ class ReadingPlanReminderBatchTest extends TestCase
         // ユーザーを作成
         $user = User::factory()->create();
 
-        // 期日3日後の読書計画を作成（期日：2026-11-12）
+        // 期日が3日前の読書計画を作成（期日：2026-11-12）
         $readingPlan = ReadingPlan::factory()->create([
             'user_id' => $user->id,
             'target_date' => now()->subDays(3)->toDateString(),
@@ -168,7 +168,7 @@ class ReadingPlanReminderBatchTest extends TestCase
         );
     }
 
-    // 異常系
+    // 通知対象外
     public function test_リマインダー対象日ではない読書計画には通知が作成されない(): void
     {
         // 通知をFake
@@ -212,7 +212,7 @@ class ReadingPlanReminderBatchTest extends TestCase
         // ユーザーを作成
         $user = User::factory()->create();
 
-        // 「期日3日前、かつ、読了済み」の読書計画を作成（期日：2026-11-18）
+        // 「期日が3日後、かつ、読了済み」の読書計画を作成（期日：2026-11-18）
         ReadingPlan::factory()->create([
             'user_id' => $user->id,
             'target_date' => now()->addDays(3)->toDateString(),
