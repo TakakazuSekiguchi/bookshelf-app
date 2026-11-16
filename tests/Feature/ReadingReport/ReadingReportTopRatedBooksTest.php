@@ -8,9 +8,7 @@ use Tests\TestCase;
 use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Review;
-// use App\Models\ReadingPlan;
 use App\Models\User;
-// use App\Enums\ReadingPlanStatus;
 
 class ReadingReportTopRatedBooksTest extends TestCase
 {

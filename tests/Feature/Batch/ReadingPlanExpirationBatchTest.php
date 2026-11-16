@@ -5,7 +5,6 @@ namespace Tests\Feature\Batch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Book;
 use App\Models\ReadingPlan;
 use App\Models\User;
 use App\Notifications\ReadingPlanReminderNotification;
