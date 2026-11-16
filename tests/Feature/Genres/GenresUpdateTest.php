@@ -5,7 +5,6 @@ namespace Tests\Feature\Genres;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use App\Models\Book;
 use App\Models\Genre;
 use App\Models\User;
 
