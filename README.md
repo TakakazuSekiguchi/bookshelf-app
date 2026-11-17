@@ -5,29 +5,29 @@ Laravelを用いて開発した書籍レビュー管理アプリです。<br>
 ユーザーは書籍を登録・閲覧し、レビューの投稿やお気に入り登録ができます。<br>
 ジャンルによる分類やレビューへのいいね機能、平均評価に基づくランキング機能も備えています。<br>
 
-■ 書籍関連の機能<br>
+### 書籍関連の機能
 書籍の登録、編集、削除が可能。登録した書籍は一覧に表示され、クリックすると詳細に遷移します。<br>
 書籍詳細には、タイトルの情報と、登録者のレビュー、閲覧者のレビュー、レビューに対するいいね件数、などが確認できます。<br>
 
-■ ランキングの表示<br>
+### ランキングの表示
 平均評価が4以上のタイトルがランキング一覧に表示されます。<br>
 
-■ お気に入り一覧<br>
+### お気に入り一覧
 書籍詳細のハートマークをクリックするとお気に入り登録され、お気に入り一覧に表示されます。<br>
 
-■ ジャンル関連の機能<br>
+### ジャンル関連の機能
 ジャンルの登録、編集、削除が可能。登録したジャンルはジャンル一覧に表示されます。<br>
 ジャンル名をクリックすると、該当ジャンルを紐づけている書籍が表示されます。<br>
 
-■ マイレポート<br>
+### マイレポート
 ログインユーザーのレビュー傾向や、読了件数が表示されます。<br>
 
-■ 読書計画の機能<br>
+### 読書計画の機能
 読書計画の登録、編集、削除、完了が可能。登録した読書計画は読書計画一覧に表示されます。<br>
 読書計画を登録する際に期日を設定します。作成時のステータス（状態）は「進行中」、完了すると「読了」に変更されます。期日を過ぎた場合は「期日超過」に変更されます。<br>
 「期日超過」は日次バッチと連動する為、リアルタイム性はありません。<br>
 
-■ 通知の機能<br>
+### 通知の機能<br>
 読書計画で設定した期日に応じた通知が行われます。<br>
 通知の対象は「期日3日前」、「期日当日」、「期日3日後」の3パターンです。<br>
 日次バッチは20時の設定になっています。該当する通知は通知一覧に表示されます。<br>
@@ -61,12 +61,13 @@ Laravelを用いて開発した書籍レビュー管理アプリです。<br>
 ![ER図](./index.drawio.png)
 
 ## 環境構築手順
+
 ※ Docker Desktop を起動した状態で以下の手順を実行してください。<br>
 
 ### 1. リポジトリをクローン
 
 ```bash
-git clone git@github.com:TakakazuSekiguchi/bookshelf-app.git
+git clone git@github.com:TakakazuSekiguchi/bookshelf-app.git bookshelf-app
 cd bookshelf-app
 ```
 
@@ -76,7 +77,7 @@ cd bookshelf-app
 cp .env.example .env
 ```
 
-`.env`ファイルを開き、以下のデータベース接続情報に書き換えます。
+`.env` ファイルを開き、以下のデータベース接続情報を設定します。<br>
 
 ```env
 DB_CONNECTION=mysql
@@ -85,20 +86,30 @@ DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=sail
 DB_PASSWORD=password
+
+# Dockerコンテナ内のユーザー・グループID
+WWWUSER=1000
+WWWGROUP=1000
 ```
 
-※上記の設定値は、実際の `compose.yaml` の MySQL 設定に合わせてください。
+※ WWWUSER・WWWGROUPは、ホストPCのユーザーID・グループIDに合わせて設定してください。Ubuntuなどでは1000が一般的ですが、環境によって異なります。<br>
 
-### 3. Dockerコンテナを起動
+### 3. Composerで依存パッケージをインストール
+
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    -e COMPOSER_CACHE_DIR=/tmp/composer_cache \
+    laravelsail/php82-composer:latest \
+    composer install
+```
+
+### 4. Dockerコンテナを起動
 
 ```bash
 docker compose up -d --build
-```
-
-### 4. Composerパッケージをインストール
-
-```bash
-docker compose exec laravel.test composer install
 ```
 
 ### 5. アプリケーションキーを生成
@@ -113,6 +124,37 @@ docker compose exec laravel.test composer install
 ./vendor/bin/sail artisan migrate
 ./vendor/bin/sail artisan db:seed
 ```
+
+### 7. Node.jsの依存パッケージをインストール
+
+```bash
+./vendor/bin/sail npm install
+```
+
+### 8. Viteを起動（画面表示に必要）
+
+```bash
+./vendor/bin/sail npm run dev
+```
+
+※ 画面を表示する際は、Viteを起動したターミナルを開いたままにしてください。<br>
+
+### 9. 日次バッチの実行
+
+#### 手動実行
+
+```bash
+./vendor/bin/sail artisan reading-plans:daily-batch
+```
+
+#### スケジュール実行
+
+```bash
+./vendor/bin/sail artisan schedule:work
+```
+
+※ スケジュール実行中はターミナルを開いたままにしてください。<br>
+※ リマインダー通知の動作確認を行う場合は、対象時刻より前に実行してください。<br>
 
 ## 使用技術（実行環境）
 - PHP 8.5.12
@@ -228,20 +270,26 @@ Unitテスト、Featureテストを中心に実装しています。<br>
 
 ### 1. テスト用データベースを作成
 
-- MySQLにログイン
+#### MySQLにログイン
 
 ```bash
-./vendor/bin/sail mysql
+./vendor/bin/sail exec mysql mysql -u root -p
 ```
 
-- `bookshelf_test` というデータベースを作成
+パスワードは、プロジェクトの .env に設定されている以下の値を確認してください。<br>
+```bash
+DB_PASSWORD=パスワード
+```
+
+#### `bookshelf_test` というデータベースを作成
 
 ```sql
 CREATE DATABASE bookshelf_test;
+GRANT ALL PRIVILEGES ON bookshelf_test.* TO 'sail'@'%';
 SHOW DATABASES;
 ```
 
-※ `SHOW DATABASES;` 実行後、`bookshelf_test` が作成されていれば成功です。
+※ `SHOW DATABASES;` 実行後、`bookshelf_test` が作成されていれば成功です。<br>
 
 ### 2. `.env` をコピーして `.env.testing` を作成
 
@@ -256,8 +304,8 @@ APP_ENV=test
 APP_KEY=
 ```
 
-※ APP_KEYはテスト用に再生成するため、一度空にしてください。  
-その後、後述のコマンド（key:generate）でテスト用キーを生成します。
+※ APP_KEYはテスト用に再生成するため、一度空にしてください。<br>
+その後、後述のコマンド（key:generate）でテスト用キーを生成します。<br>
 
 ### 4. `.env.testing` のDB設定を以下のように変更
 
@@ -270,10 +318,10 @@ DB_USERNAME=sail
 DB_PASSWORD=password
 ```
 
-※【重要】開発用データベースと分離するため、テスト専用DBを使用しています。  
-必ず `DB_DATABASE=bookshelf_test` に書き換えるようお願いいたします。
+※【重要】開発用データベースと分離するため、テスト専用DBを使用しています。<br>
+必ず `DB_DATABASE=bookshelf_test` に書き換えるようお願いいたします。<br>
 
-※ DB_USERNAMEとDB_PASSWORDは、`.env` のMySQL接続設定と一致させてください。
+※ DB_USERNAMEとDB_PASSWORDは、`.env` のMySQL接続設定と一致させてください。<br>
 
 ### 5. テスト用データベースのマイグレーション
 
@@ -282,7 +330,7 @@ DB_PASSWORD=password
 ./vendor/bin/sail artisan migrate:fresh --env=testing
 ```
 
-※ `migrate:fresh` は対象データベースのテーブルをすべて削除してから再作成します。必ずテスト用データベースに接続されていることを確認してください。
+※ `migrate:fresh` は対象データベースのテーブルをすべて削除してから再作成します。必ずテスト用データベースに接続されていることを確認してください。<br>
 
 ### テスト実行
 ```bash
